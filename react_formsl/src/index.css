@@ -1,0 +1,10 @@
+body {
+  background-color: rgb(39, 37, 37);
+  color: bisque;
+}
+.myContainer {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+}
