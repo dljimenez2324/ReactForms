@@ -6,8 +6,15 @@ import {z} from "zod";
 
   // we are going to use zod now for validation
   const schema = z.object({
-    name: z.string().min(3),
+
+    // for standard error message we do this
+    //name: z.string().min(3),
+    // to have a custom message we do this
+    name: z.string().min(3, {message: "Name must be at least 3 characters bruh!"}),
+    //for standard age message
     age: z.number().min(21)
+    // for custom age message
+    // age: z.number({invalid_type_error: "Age field is required"}).min(21, {message: "You must be 21 to continue"})
   })
 
   // // lets make an interface to hold our data
@@ -26,7 +33,8 @@ const FormValidationZod = () => {
 
     
     // in order to see just the errors we can destructure the formState  see below
-    const {register, handleSubmit, formState:{errors}} = useForm<FormData>({resolver:zodResolver(schema)});
+    // now lets see how it is for making sure its valid too
+    const {register, handleSubmit, formState:{errors,isValid}} = useForm<FormData>({resolver:zodResolver(schema)});
 
     console.log(errors);
 
@@ -37,7 +45,7 @@ const FormValidationZod = () => {
 
   return (
     <>
-        <h1 className="text-center">Form using React Hook Forms</h1>
+        <h1 className="text-center">React Forms Validation with Zod</h1>
       <form onSubmit={handleSubmit(onHelpSubmit)}>
         <div className="mb-3 myContainer">
           <label htmlFor="" className="form-label">Name</label>
@@ -45,12 +53,15 @@ const FormValidationZod = () => {
           <input {...register('name', )} id="name" type="text" className="form-control" />
           {/* lets add our errors here */}
           {/* notice that && is similar to the turnery that is just below it but only for rendering null if false */}
-          {errors.name && <p className="text-danger">{}</p>}
+          {errors.name && <p className="text-danger">{errors.name.message}</p>}
           
           <label htmlFor="" className="form-label">Age</label>
-          <input {...register('age', )} id="age" type="text" className="form-control" />
-          {errors.age ? <p className="text-danger">The age field is required</p> : null}
-          <button className="btn btn-primary mt-3" type="submit">Submit</button>   
+          {/* notice that we have to add valueAsNumber: true so that our input is made to be a number instead the standar string */}
+          <input {...register('age', {valueAsNumber: true})} id="age" type="number" className="form-control" />
+          {errors.age ? <p className="text-danger">{errors.age.message}</p> : null}
+
+          {/* now lets add the validation to this button */}
+          <button disabled={!isValid} className="btn btn-primary mt-3" type="submit">Submit</button>   
         </div>
       </form>
     </>
