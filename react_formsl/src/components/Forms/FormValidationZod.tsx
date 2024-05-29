@@ -49,7 +49,7 @@ const FormValidationZod = () => {
       <form onSubmit={handleSubmit(onHelpSubmit)}>
         <div className="mb-3 myContainer">
           <label htmlFor="" className="form-label">Name</label>
-          {/* notice that we are simply putting the function inside the onchange instead of making a helper function */}
+          
           <input {...register('name', )} id="name" type="text" className="form-control" />
           {/* lets add our errors here */}
           {/* notice that && is similar to the turnery that is just below it but only for rendering null if false */}

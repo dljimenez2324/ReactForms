@@ -8,7 +8,7 @@ const FormUseRef = () => {
     // create a useRef  and lets give it a type by doing <HTMLInputElement>
     const nameRef = useRef<HTMLInputElement>(null)
 
-    // to hold the age we need to make a nother useRef
+    // to hold the age we need to make another useRef
     const ageRef = useRef<HTMLInputElement>(null)
 
     // create an object to hold our values since it makes more sense to use in this case
